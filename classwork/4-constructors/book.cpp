@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// HW -> Library - more info in the classroom
+
 class Book{
     private:
         unsigned int page_count;
