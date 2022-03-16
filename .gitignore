@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Custom test files
+
+test.cpp
+a.cpp

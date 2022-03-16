@@ -9,7 +9,7 @@ using namespace std;
 
 class Planet{
     private:
-        char name[50];
+        char *name;
         double distance_to_sun;
         double diameter;
         double mass;
@@ -65,22 +65,23 @@ int main(){
 Planet::Planet(const char *name, double distance_to_sun, double diameter, double mass){
     if(!name) return;
     if(strlen(name) >= 50) return;
-    strcpy(this->name, name);
+    this->name = strdup(name);
     this->distance_to_sun = distance_to_sun > 0 ? distance_to_sun : 0;
     this->diameter = diameter > 0 ? diameter : 0;
     this->mass = mass > 0 ? mass : 0;
 }
 
 Planet::~Planet(){
-    //TODO free memory
+    delete [] name;
 }
 
 // Setters
 
     void Planet::set_name(const char *name){
         if(!name) return;
+        if(this->name) delete [] this->name;
         if(strlen(name) >= 50) return;
-        strcpy(this->name, name);
+        this->name = strdup(name);
     }
 
     void Planet::set_distance_to_sun(double distance_to_sun){
