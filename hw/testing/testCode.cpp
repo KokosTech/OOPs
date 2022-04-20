@@ -1,10 +1,5 @@
 #include <iostream>
 #include <string>
-#include <limits>
-
-#include <store/Product.hpp>
-#include <store/Property.hpp>
-#include <store/Store.hpp>
 
 using namespace std;
 
@@ -27,34 +22,33 @@ void printMenu() {
 void setupStore(string &name, string &addr, string &type, double &baseRent) {
     clearScreen();
     cout << "Enter the name of the store: ";
-    getline(cin >> ws, name);
+    getline(cin, name);
     cout << "Enter the address of the store: ";
-    getline(cin >> ws, addr);
+    getline(cin, addr);
     cout << "Enter the type of the store: ";
-    getline(cin >> ws, type);
-    cout << "FUCK >> " << type << "\n";
+    getline(cin, type);
     cout << "Enter the base rent of the store: ";
     cin >> baseRent;
     cout << endl;
 }
 
-void addProduct(Store *store) {
+void addProduct() {
     string productName;
     double productPrice;
     int productQ;
 
     cout << "Enter the name of the product: ";
-    getline(cin >> ws, productName);
+    getline(cin, productName);
     cout << "Enter the price of the product: ";
     cin >> productPrice;
     cout << "Enter the quantity of the product: ";
     cin >> productQ;
 
-    try {
+/*     try {
         store->addProduct(Product(productName, productPrice, productQ));
     } catch (invalid_argument& e) {
         cerr << e.what() << endl;
-    }
+    } */
     cout << "Product added successfully" << endl;
 }
 
@@ -62,33 +56,34 @@ int main() {
     string storeName, storeAddr, storeType;
     double baseRent;
     int cmd;
-    Store *store = nullptr;
+    int *store = nullptr;
 
     setupStore(storeName, storeAddr, storeType, baseRent);
     try {
-        store = new Store(storeName, storeAddr, baseRent, storeType);
+        store = new int[10];
     } catch(invalid_argument& e) {
         cerr << e.what() << endl;
         return 1;
     }
+    
 
     while(true) {
         clearScreen();
         printMenu();
         cin >> cmd;
         clearScreen();
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+/*         cin.clear(); */
+/*         cin.ignore(numeric_limits<streamsize>::max(), '\n'); */
         switch (cmd) {
             case 1:
-                addProduct(store);
+                addProduct();
                 break;
             case 2:
                 {
                     string productName;
                     cout << "Enter the name of the product: ";
-                    getline(cin >> ws, productName);
-                    cout << "The quantity of the product is: " << store->getProductQuantity(productName) << endl;
+                    getline(cin, productName);
+                    //cout << "The quantity of the product is: " << store->getProductQuantity(productName) << endl;
                 }
                 break;
             case 3:
@@ -96,7 +91,7 @@ int main() {
                     string productName;
                     cout << "Enter the name of the product: ";
                     getline(cin, productName);
-                    cout << "The price of the product is: " << store->getProductPrice(productName) << endl;
+                    //cout << "The price of the product is: " << store->getProductPrice(productName) << endl;
                 }
                 break;
             case 4:
@@ -108,7 +103,7 @@ int main() {
                     cout << "Enter the quantity of the product: ";
                     cin >> productQ;
                     try {
-                        store->restockProduct(productName, productQ);
+                        //store->restockProduct(productName, productQ);
                     } catch (invalid_argument& e) {
                         cerr << e.what() << endl;
                     }
@@ -124,7 +119,7 @@ int main() {
                     cout << "Enter the price of the product: ";
                     cin >> productPrice;
                     try {
-                        store->changeProductPrice(productName, productPrice);
+                        //store->changeProductPrice(productName, productPrice);
                     } catch (invalid_argument& e) {
                         cerr << e.what() << endl;
                     }
@@ -140,7 +135,7 @@ int main() {
                     cout << "Enter the quantity of the product: ";
                     cin >> productQ;
                     try {
-                        store->buyProduct(productName, productQ);
+                        //store->buyProduct(productName, productQ);
                     } catch (invalid_argument& e) {
                         cerr << e.what() << endl;
                     }
@@ -148,7 +143,8 @@ int main() {
                 }
                 break;
             case 7:
-                store->printStore();
+                //store->printStore();
+                cout << "HDSHJFBJHDSFB";
                 break;
             case 8:
                 exit(0);

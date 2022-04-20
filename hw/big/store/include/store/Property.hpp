@@ -19,13 +19,12 @@ class Property {
             if (baseRent < 0)
                 throw std::invalid_argument("Rent cannot be negative");
 
-            if (typeOfProperty.empty() && (
-                    typeOfProperty != "supermarket" || 
-                    typeOfProperty != "pharmacy" || 
-                    typeOfProperty != "non-stop" || 
-                    typeOfProperty != "other"
-                )
-            ) throw invalid_argument("Type of property cannot be empty");
+            if ( 
+                typeOfProperty != "supermarket" && 
+                typeOfProperty != "pharmacy" && 
+                typeOfProperty != "non-stop" && 
+                typeOfProperty != "other"
+            ) throw invalid_argument("Type of property cannot be " + ((typeOfProperty.empty()) ? "empty" : ("\"" + typeOfProperty + "\"")));
         }
 
     public:
