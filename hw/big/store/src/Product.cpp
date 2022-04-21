@@ -1,4 +1,4 @@
-#include "store/Product.hpp"
+#include <store/Product.hpp>
 
 void Product::isValid(string name, int quantity, double price) {
     if (name.empty()) 
