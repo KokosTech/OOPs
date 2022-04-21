@@ -141,7 +141,7 @@ class Store : public Property {
             cout << "Store name: " << this->name << endl;
             cout << "Address: " << this->getAddress() << endl;
             cout << "Rent: " << this->calcRent() << endl;
-            cout << "Type of property: " << this->getTypeOfProperty() << endl;
+            cout << "Type of property: " << this->getType() << endl;
             
             if(this->products.quantity > 0) {
                 cout << "Products: " << endl;

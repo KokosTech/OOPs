@@ -20,11 +20,8 @@ Product::Product(string name, int quantity, double price)
     isValid(name, quantity, price);
 }
 
-Product::Product(const Product& other) {
-    this->name = other.name;
-    this->quantity = other.quantity;
-    this->price = other.price;
-}
+Product::Product(const Product &other)
+: name(other.name), quantity(other.quantity), price(other.price) { }
 
 Product &Product::operator=(const Product& other) {
     if(this != &other) {
@@ -35,11 +32,11 @@ Product &Product::operator=(const Product& other) {
     return *this;
 }
 
-bool Product::operator==(const Product& other) {
+bool Product::operator==(const Product &other) {
     return this->name == other.name && this->quantity == other.quantity && this->price == other.price;
 }
 
-Product::~Product() {}
+Product::~Product() { }
 
 // Setters
 
