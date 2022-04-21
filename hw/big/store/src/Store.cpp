@@ -18,6 +18,24 @@ void Store::resize() {
     this->products.products = tmp;
 }
 
+Product *Store::getProduct(string name) const {
+    for (size_t i = 0; i < this->products.quantity; i++) {
+        if (this->products.products[i].getName() == name)
+            return &this->products.products[i];
+    }
+
+    throw invalid_argument("Product does not exist!");
+}
+
+Product *Store::getProduct(Product product) const {
+    for (size_t i = 0; i < this->products.quantity; i++) {
+        if (this->products.products[i].getName() == product.getName())
+            return &this->products.products[i];
+    }
+
+    throw invalid_argument("Product does not exist!");
+}
+
 bool Store::repetative(string name) {
     for (size_t i = 0; i < products.quantity; i++)
         if (products.products[i].getName() == name)
@@ -44,7 +62,7 @@ Store::Store(const Store& other) : Property(other) {
     }
 }
 
-Store &Store::operator=(const Store& other) {
+Store &Store::operator=(const Store &other) {
     if(this != &other) {
         Property::operator=(other);
         this->name = other.name;
@@ -57,15 +75,11 @@ Store &Store::operator=(const Store& other) {
     return *this;
 }
 
-Store::~Store() {
-    delete[] this->products.products;
-}
+Store::~Store() { delete[] this->products.products; }
 
 // Getters
 
-string Store::getName()const {
-    return this->name;
-}
+string Store::getName() const { return this->name; }
 
 products_t *Store::revision_old() const {
     products_t *v = new products_t;
@@ -103,39 +117,23 @@ vector<Product> Store::revision() const {
 }
 
 uint Store::getProductQuantity(string name) const {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == name) {
-            return this->products.products[i].getQ();
-        }
-    }
-    throw invalid_argument("Product does not exist!");
+    Product *tmp = getProduct(name);
+    return tmp->getQ();
 }
 
 uint Store::getProductQuantity(Product product) const {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i] == product) {
-            return this->products.products[i].getQ();
-        }
-    }
-    throw invalid_argument("Product does not exist!");
+    Product *tmp = getProduct(product);
+    return tmp->getQ();
 }
 
 double Store::getProductPrice(string name) const {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == name) {
-            return this->products.products[i].getPrice();
-        }
-    }
-    throw invalid_argument("Product does not exist!");
+    Product *tmp = getProduct(name);
+    return tmp->getPrice();
 }
 
 double Store::getProductPrice(Product product) const {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i] == product) {
-            return this->products.products[i].getPrice();
-        }
-    }
-    throw invalid_argument("Product does not exist!");
+    Product *tmp = getProduct(product);
+    return tmp->getPrice();
 }
 
 void Store::printStore()const {
@@ -157,84 +155,72 @@ void Store::printStore()const {
 // Setters
 
 void Store::addProduct(string name, int quantity, double price) {
-    if (this->repetative(name)) {
+    if (this->repetative(name))
         throw invalid_argument("Product already exists");
-    }
-    if (this->products.quantity >= this->products.capacity) {
+    
+    if (this->products.quantity >= this->products.capacity)
         this->resize();
-    }
+    
     this->products.products[this->products.quantity++] = Product(name, quantity, price);
 }
 
 void Store::addProduct(Product product) {
-    if (this->repetative(product.getName())) {
+    if (this->repetative(product.getName()))
         throw invalid_argument("Product already exists");
-    }
-    if (this->products.quantity >= this->products.capacity) {
+
+    if (this->products.quantity >= this->products.capacity)
         this->resize();
-    }
+    
     this->products.products[this->products.quantity++] = product;
 }
 
 void Store::restockProduct(string name, int quantity) {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == name) {
-            this->products.products[i].setQ(this->products.products[i].getQ() + quantity);
-            return;
-        }
-    }
-                throw invalid_argument("Product does not exist!");
+    if(quantity <= 0)
+        throw invalid_argument("Quantity must be positive!");
 
+    Product *tmp = getProduct(name);
+    tmp->setQ(tmp->getQ() + quantity);
+
+    cout << "Restoring " << name << " to " << tmp->getQ() << endl;
 }
 
 void Store::restockProduct(Product product, int quantity) {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == product.getName()) {
-            this->products.products[i].setQ(this->products.products[i].getQ() + quantity);
-            return;
-        }
-    }
-                throw invalid_argument("Product does not exist!");
+    if(quantity <= 0)
+        throw invalid_argument("Quantity must be positive!");
 
+    Product *tmp = getProduct(product);
+    tmp->setQ(tmp->getQ() + quantity);
+
+    cout << "Restoring " << product.getName() << " to " << tmp->getQ() << endl;
 }
 
 void Store::buyProduct(string name, int quantityToBuy) {
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == name) {
-            if (this->products.products[i].getQ() >= quantityToBuy) {
-                (this->products.products[i].getQ() > quantityToBuy) ? this->products.products[i].setQ(this->products.products[i].getQ() - quantityToBuy) : this->products.products[i].setQ(0);
-                return;
-            }
-        }
+    if (quantityToBuy <= 0) {
+        throw invalid_argument("Quantity must be positive!");
     }
-                throw invalid_argument("Product does not exist!");
 
+    Product *tmp = getProduct(name);
+    (tmp->getQ() > quantityToBuy) ? tmp->setQ(tmp->getQ() - quantityToBuy) : tmp->setQ(0);
+
+    cout << "You bought " << name << " successfully" << endl;
 }
 
 void Store::changeProductPrice(string name, double price) {
-    if (price < 0) {
+    if (price < 0)
         throw invalid_argument("Price can't be negative");
-    }
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i].getName() == name) {
-            this->products.products[i].setPrice(price);
-            return;
-        }
-    }
-                throw invalid_argument("Product does not exist!");
+    
+    Product *tmp = getProduct(name);
+    tmp->setPrice(price);
 
+    cout << "Product " << name << " price changed to " << price << endl;
 }
 
 void Store::changeProductPrice(Product product, double price) {
-    if (price < 0) {
+    if (price < 0)
         throw invalid_argument("Price can't be negative");
-    }
-    for (size_t i = 0; i < this->products.quantity; ++i) {
-        if (this->products.products[i] == product) {
-            this->products.products[i].setPrice(price);
-            return;
-        }
-    }
-                throw invalid_argument("Product does not exist!");
+    
+    Product *tmp = getProduct(product);
+    tmp->setPrice(price);
 
+    cout << "Product " << product.getName() << " price changed to " << price << endl;
 }

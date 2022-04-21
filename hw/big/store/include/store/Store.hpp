@@ -22,13 +22,16 @@ class Store : public Property {
 
         void isValid(string name);
         void resize();
-        bool repetative(string name);
 
+        Product *getProduct(string name) const;
+        Product *getProduct(Product product) const;
+        bool repetative(string name);
+    
     public:
         Store(string name, string address, double rent, string typeOfProperty);
         Store(const Store& other);
 
-        Store &operator=(const Store& other);
+        Store &operator=(const Store &other);
 
         ~Store();
 
