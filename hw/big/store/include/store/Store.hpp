@@ -3,8 +3,6 @@
 
 #pragma once
 
-// TODO - Fix TRY CATCH FOR ----> getQ and getPrice
-
 #define D_CAP 2
 
 using namespace std;
@@ -15,6 +13,8 @@ typedef struct products {
     size_t capacity;
 } products_t;
 
+products_t *resize(products_t *products);
+
 class Store : public Property {
     private:
         string name;
@@ -24,7 +24,7 @@ class Store : public Property {
         void resize();
 
         Product *getProduct(string name) const;
-        Product *getProduct(Product product) const;
+        Product *getProduct(Product *product) const;
         bool repetative(string name);
     
     public:
@@ -44,10 +44,10 @@ class Store : public Property {
         vector<Product> revision() const;
 
         uint getProductQuantity(string name) const;
-        uint getProductQuantity(Product product) const;
+        uint getProductQuantity(Product *product) const;
 
         double getProductPrice(string name) const;
-        double getProductPrice(Product product) const;
+        double getProductPrice(Product *product) const;
 
         void printStore() const;
 
@@ -57,11 +57,11 @@ class Store : public Property {
         void addProduct(Product product);
 
         void restockProduct(string name, int quantity);
-        void restockProduct(Product product, int quantity);
+        void restockProduct(Product *product, int quantity);
 
         void buyProduct(string name, int quantityToBuy);
-        void buyProduct(Product product, int quantityToBuy);
+        void buyProduct(Product *product, int quantityToBuy);
 
         void changeProductPrice(string name, double price);
-        void changeProductPrice(Product product, double price);
+        void changeProductPrice(Product *product, double price);
 };

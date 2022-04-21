@@ -1,5 +1,18 @@
 #include <store/Store.hpp>
 
+// STRUCT
+
+products_t *resize(products_t *products) {
+    products_t *new_products = new products_t;
+    new_products->capacity = products->capacity * D_CAP;
+    new_products->products = new Product[new_products->capacity];
+    for (size_t i = 0; i < products->quantity; i++) {
+        new_products->products[i] = products->products[i];
+    }
+    delete[] products->products;
+    return new_products;
+}
+
 // PRIVATE
 
 void Store::isValid(string name) {
@@ -27,9 +40,9 @@ Product *Store::getProduct(string name) const {
     throw invalid_argument("Product does not exist!");
 }
 
-Product *Store::getProduct(Product product) const {
+Product *Store::getProduct(Product *product) const {
     for (size_t i = 0; i < this->products.quantity; i++) {
-        if (this->products.products[i].getName() == product.getName())
+        if (this->products.products[i].getName() == product->getName())
             return &this->products.products[i];
     }
 
@@ -53,7 +66,7 @@ Store::Store(string name, string address, double rent, string typeOfProperty) : 
     this->products.products = new Product[this->products.capacity];
 }
 
-Store::Store(const Store& other) : Property(other) {
+Store::Store(const Store &other) : Property(other) {
     this->name = other.name;
     this->products.capacity = other.products.capacity;
     this->products.products = new Product[this->products.capacity];
@@ -121,7 +134,7 @@ uint Store::getProductQuantity(string name) const {
     return tmp->getQ();
 }
 
-uint Store::getProductQuantity(Product product) const {
+uint Store::getProductQuantity(Product *product) const {
     Product *tmp = getProduct(product);
     return tmp->getQ();
 }
@@ -131,7 +144,7 @@ double Store::getProductPrice(string name) const {
     return tmp->getPrice();
 }
 
-double Store::getProductPrice(Product product) const {
+double Store::getProductPrice(Product *product) const {
     Product *tmp = getProduct(product);
     return tmp->getPrice();
 }
@@ -143,7 +156,7 @@ void Store::printStore()const {
     cout << "Type of property: " << this->getType() << endl;
     
     if(this->products.quantity > 0) {
-        cout << "Products: " << endl;
+        cout << "Products: " << this->products.quantity << endl;
         for (size_t i = 0; i < this->products.quantity; i++) {
             cout << "===" << this->products.products[i].getName() << "===" << endl;
             cout << "Quantity: " << this->products.products[i].getQ() << endl;
@@ -184,14 +197,14 @@ void Store::restockProduct(string name, int quantity) {
     cout << "Restoring " << name << " to " << tmp->getQ() << endl;
 }
 
-void Store::restockProduct(Product product, int quantity) {
+void Store::restockProduct(Product *product, int quantity) {
     if(quantity <= 0)
         throw invalid_argument("Quantity must be positive!");
 
     Product *tmp = getProduct(product);
     tmp->setQ(tmp->getQ() + quantity);
 
-    cout << "Restoring " << product.getName() << " to " << tmp->getQ() << endl;
+    cout << "Restoring " << product->getName() << " to " << tmp->getQ() << endl;
 }
 
 void Store::buyProduct(string name, int quantityToBuy) {
@@ -200,9 +213,14 @@ void Store::buyProduct(string name, int quantityToBuy) {
     }
 
     Product *tmp = getProduct(name);
+    if (tmp->getQ() < quantityToBuy) {
+        cout << "There aren’t " << quantityToBuy << " " << name << " products in the store!" << endl;
+        cout << "Successfully bought " << tmp->getQ() << " " << name << " products" << endl;
+    } else {
+        tmp->setQ(tmp->getQ() - quantityToBuy);
+        cout << "Buying " << quantityToBuy << " " << name << " products!" << endl;
+    }
     (tmp->getQ() > quantityToBuy) ? tmp->setQ(tmp->getQ() - quantityToBuy) : tmp->setQ(0);
-
-    cout << "You bought " << name << " successfully" << endl;
 }
 
 void Store::changeProductPrice(string name, double price) {
@@ -215,12 +233,12 @@ void Store::changeProductPrice(string name, double price) {
     cout << "Product " << name << " price changed to " << price << endl;
 }
 
-void Store::changeProductPrice(Product product, double price) {
+void Store::changeProductPrice(Product *product, double price) {
     if (price < 0)
         throw invalid_argument("Price can't be negative");
     
     Product *tmp = getProduct(product);
     tmp->setPrice(price);
 
-    cout << "Product " << product.getName() << " price changed to " << price << endl;
+    cout << "Product " << product->getName() << " price changed to " << price << endl;
 }

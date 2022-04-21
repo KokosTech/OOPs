@@ -60,8 +60,9 @@ void addProduct(Store *store) {
         store->addProduct(Product(productName, productQ, productPrice));
     } catch (invalid_argument& e) {
         cerr << e.what() << endl;
+        return;
     }
-    cout << "Product added successfully" << endl;
+    cout << productName << " added successfully" << endl;
 }
 
 void checkProductQuantity(Store *const store) {
@@ -80,8 +81,10 @@ void checkProductPrice(Store *const store) {
     cout << "Enter the name of the product: ";
     getline(cin , productName);
     try {
-    cout << "The price of the product " << productName << " is " << store->getProductPrice(productName) << endl;    } catch (invalid_argument& e) {
+        cout << "The price of the product " << productName << " is " << store->getProductPrice(productName) << endl;    
+    } catch (invalid_argument& e) {
         cerr << e.what() << endl;
+        return;
     }
 }
 
@@ -96,8 +99,9 @@ void restockProduct(Store *store) {
         store->restockProduct(productName, productQ);
     } catch (invalid_argument& e) {
         cerr << e.what() << endl;
+        return;
     }
-    cout << "Product has been restocked successfully" << endl;
+    cout << productName << " has been restocked successfully" << endl;
 }
 
 void changeProductPrice(Store *store) {
@@ -112,10 +116,11 @@ void changeProductPrice(Store *store) {
     try {
         store->changeProductPrice(productName, productPrice);
     } catch (invalid_argument& e) {
+        return;
         cerr << e.what() << endl;
     }
 
-    cout << "Product price changed successfully" << endl;
+    cout << productName << " price changed successfully" << endl;
 }
 
 void buyProduct(Store *store) {
@@ -131,9 +136,10 @@ void buyProduct(Store *store) {
         store->buyProduct(productName, productQ);
     } catch (invalid_argument& e) {
         cerr << e.what() << endl;
+        return;
     }
 
-    cout << "Product has been bought successfully" << endl;
+    cout << productName << " has been bought successfully" << endl;
 }
 
 void revision(Store *const store) {
@@ -179,6 +185,8 @@ int main() {
         switch (cmd) {
             case 1:
                 addProduct(store);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 break;
             case 2:
                 checkProductQuantity(store);
@@ -188,12 +196,18 @@ int main() {
                 break;
             case 4:
                 restockProduct(store);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 break;
             case 5:
                 changeProductPrice(store);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 break;
             case 6:
                 buyProduct(store);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 break;
             case 7:
                 store->printStore();
