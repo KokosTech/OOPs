@@ -3,6 +3,8 @@
 
 #pragma once
 
+// TODO - Fix TRY CATCH FOR ----> getQ and getPrice
+
 #define D_CAP 2
 
 using namespace std;
