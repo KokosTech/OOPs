@@ -82,6 +82,6 @@ class Product {
         // Getters
 
         string getName()const { return this->name; }
-        uint getQ()const { return quantity; }
+        uint getQ()const { return this->quantity; }
         double getPrice()const { return this->price; }
 };

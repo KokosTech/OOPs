@@ -105,7 +105,7 @@ class Store : public Property {
                     return this->products.products[i].getQ();
                 }
             }
-            return 0;
+            throw invalid_argument("Product does not exist!");
         }
 
         uint getProductQuantity(Product product) const {
@@ -114,7 +114,7 @@ class Store : public Property {
                     return this->products.products[i].getQ();
                 }
             }
-            return 0;
+            throw invalid_argument("Product does not exist!");
         }
 
         double getProductPrice(string name) const {
@@ -123,7 +123,7 @@ class Store : public Property {
                     return this->products.products[i].getPrice();
                 }
             }
-            return 0;
+            throw invalid_argument("Product does not exist!");
         }
 
         double getProductPrice(Product product) const {
@@ -132,7 +132,7 @@ class Store : public Property {
                     return this->products.products[i].getPrice();
                 }
             }
-            return 0;
+            throw invalid_argument("Product does not exist!");
         }
 
         void printStore()const {
@@ -140,11 +140,14 @@ class Store : public Property {
             cout << "Address: " << this->getAddress() << endl;
             cout << "Rent: " << this->calcRent() << endl;
             cout << "Type of property: " << this->getTypeOfProperty() << endl;
-            cout << "Products: " << endl;
-            for (size_t i = 0; i < this->products.quantity; i++) {
-                cout << "===" << this->products.products[i].getName() << "===" << endl;
-                cout << "Quantity: " << this->products.products[i].getQ() << endl;
-                cout << "Price: " << this->products.products[i].getPrice() << endl;
+            
+            if(this->products.quantity > 0) {
+                cout << "Products: " << endl;
+                for (size_t i = 0; i < this->products.quantity; i++) {
+                    cout << "===" << this->products.products[i].getName() << "===" << endl;
+                    cout << "Quantity: " << this->products.products[i].getQ() << endl;
+                    cout << "Price: " << this->products.products[i].getPrice() << endl;
+                }
             }
         } 
 
@@ -177,6 +180,8 @@ class Store : public Property {
                     return;
                 }
             }
+                        throw invalid_argument("Product does not exist!");
+
         }
 
         void restockProduct(Product product, int quantity) {
@@ -186,6 +191,8 @@ class Store : public Property {
                     return;
                 }
             }
+                        throw invalid_argument("Product does not exist!");
+
         }
 
         void buyProduct(string name, int quantityToBuy) {
@@ -197,6 +204,8 @@ class Store : public Property {
                     }
                 }
             }
+                        throw invalid_argument("Product does not exist!");
+
         }
 
         void changeProductPrice(string name, double price) {
@@ -209,6 +218,8 @@ class Store : public Property {
                     return;
                 }
             }
+                        throw invalid_argument("Product does not exist!");
+
         }
 
         void changeProductPrice(Product product, double price) {
@@ -221,5 +232,7 @@ class Store : public Property {
                     return;
                 }
             }
+                        throw invalid_argument("Product does not exist!");
+
         }
 };

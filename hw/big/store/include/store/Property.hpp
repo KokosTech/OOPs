@@ -10,7 +10,7 @@ class Property {
     private:
         string address;
         double baseRent;
-        string typeOfProperty;
+        string type;
 
         void isValid(string address, double baseRent, string typeOfProperty) {
             if (address.empty())
@@ -19,33 +19,39 @@ class Property {
             if (baseRent < 0)
                 throw std::invalid_argument("Rent cannot be negative");
 
-            if ( 
+            /* if ( 
                 typeOfProperty != "supermarket" && 
                 typeOfProperty != "pharmacy" && 
                 typeOfProperty != "non-stop" && 
                 typeOfProperty != "other"
-            ) throw invalid_argument("Type of property cannot be " + ((typeOfProperty.empty()) ? "empty" : ("\"" + typeOfProperty + "\"")));
+            ) throw invalid_argument("Type of property cannot be " + ((typeOfProperty.empty()) ? "empty" : ("\"" + typeOfProperty + "\""))); */
+            
+            if ( 
+                typeOfProperty != "supermarket" && 
+                typeOfProperty != "pharmacy" && 
+                typeOfProperty != "non-stop"
+            ) this->type = "other";
         }
 
     public:
         Property(string address, double baseRent, string typeOfProperty) {
             this->address = address;
             this->baseRent = baseRent;
-            this->typeOfProperty = typeOfProperty;
+            this->type = typeOfProperty;
             isValid(address, baseRent, typeOfProperty);
         }
 
         Property(const Property& other) {
             this->address = other.address;
             this->baseRent = other.baseRent;
-            this->typeOfProperty = other.typeOfProperty;
+            this->type = other.type;
         }
 
         Property &operator=(const Property& other) {
             if(this != &other) {
                 this->address = other.address;
                 this->baseRent = other.baseRent;
-                this->typeOfProperty = other.typeOfProperty;
+                this->type = other.type;
             }
             return *this;
         }
@@ -99,17 +105,17 @@ class Property {
         }
 
         string getTypeOfProperty()const {
-            return this->typeOfProperty;
+            return this->type;
         }
 
         // Special methods
 
         double calcRent()const {
-            if(this->typeOfProperty == "supermarket")
+            if(this->type == "supermarket")
                 return this->baseRent * 1.4;
-            else if(this->typeOfProperty == "pharmacy")
+            else if(this->type == "pharmacy")
                 return this->baseRent * 1.3;
-            else if(this->typeOfProperty == "non-stop")
+            else if(this->type == "non-stop")
                 return this->baseRent * 1.2;
             else
                 return this->baseRent;
