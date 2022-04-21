@@ -26,6 +26,8 @@ void printMenu() {
     cout << "7. Show shop's information" << endl;
     cout << "8. Show products with limited stock" << endl;
     cout << "9. Exit" << endl;
+    cout << "10. [LEGACY] non-STL version of revision() -> Show products with limited stock" << endl;
+    cout << "======================" << endl;
     cout << "Choose an option: ";
 }
 
@@ -143,6 +145,15 @@ void revision(Store *const store) {
     }
 }
 
+void revision_old(Store *const store) {
+    products_t *v = store->revision_old();
+    for (int i = 0; i < v->quantity; ++i) {
+            cout << "===" << v->products[i].getName() << "===" << endl;
+            cout << "Quantity: " << v->products[i].getQ() << endl;
+            cout << "Price: " << v->products[i].getPrice() << endl;
+    }
+}
+
 int main() {
     string storeName, storeAddr, storeType;
     double baseRent;
@@ -192,6 +203,9 @@ int main() {
                 break;
             case 9:
                 exit(0);
+                break;
+            case 10:
+                revision_old(store);
                 break;
             default:
                 cout << "Invalid option" << endl;

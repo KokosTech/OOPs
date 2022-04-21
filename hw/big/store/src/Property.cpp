@@ -4,10 +4,10 @@
 
 void Property::isValid(string address, double baseRent, string typeOfProperty) {
     if (address.empty())
-        throw std::invalid_argument("Address cannot be empty");
+        throw invalid_argument("Address cannot be empty");
 
     if (baseRent < 0)
-        throw std::invalid_argument("Rent cannot be negative");
+        throw invalid_argument("Rent cannot be negative");
 
     /* if ( 
         typeOfProperty != "supermarket" && 
