@@ -37,3 +37,5 @@ test.cpp
 a.cpp
 
 .DS_Store
+
+*.zip
