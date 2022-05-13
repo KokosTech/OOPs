@@ -13,25 +13,25 @@ class Song {
     public:
         friend istream &operator>>(istream &in , Song &s) {
             in >> s.name;
-            in >> s.address;
+            in >> s.artist;
             in >> s.length;
             return in;
         }
 
         friend ostream &operator<<(ostream &out, const Song &s) {
             out << "Name: " << s.name << '\n';
-            out << "Artist: " << s.address << '\n';
+            out << "Artist: " << s.artist << '\n';
             out << "Length: " s.length << '\n';
             return out;
         }
 
-        friend void write_file(fstream f, const Song &s) {
+        friend int write_file(fstream f, const Song &s) {
             if(!f.is_open()) return -1;
             f << s;
             if(!f.good()) return -1;
         }
 
-        friend void write_file(string fName, const Song &s) {
+        friend int write_file(string fName, const Song &s) {
             f.open(fName, ios::in | ios::out | ios::trunc); // ios::app
             if(!f.is_open()) return -1;
             
