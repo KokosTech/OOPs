@@ -32,6 +32,7 @@ class Song {
         }
 
         friend int write_file(string fName, const Song &s) {
+            fstream f;
             f.open(fName, ios::in | ios::out | ios::trunc); // ios::app
             if(!f.is_open()) return -1;
             
