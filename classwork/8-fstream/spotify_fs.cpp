@@ -305,6 +305,8 @@ int main(int argc, char* argv[]){
     Song s1("song1", "artist1", 20);
     Song s2("song2", "artist2", 30);
 
+    s2.write_file("based.txt", s2);
+
     Playlist p1("Playlist1", "owner1");
     p1.addSong(s1);
     p1.addSong(s2);
