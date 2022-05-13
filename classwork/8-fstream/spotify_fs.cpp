@@ -21,7 +21,7 @@ class Song {
         friend ostream &operator<<(ostream &out, const Song &s) {
             out << "Name: " << s.name << '\n';
             out << "Artist: " << s.artist << '\n';
-            out << "Length: " s.length << '\n';
+            out << "Length: " << s.length << '\n';
             return out;
         }
 
