@@ -12,10 +12,10 @@ class Book{
         unsigned int price;
     public:
         // Constructors
-        Book(){}
+        Book() : page_count(0), title(""), author(""), price(0) { }
 
         Book(unsigned int pc, string t, string a)
-        :page_count(pc), title(t), author(a){}
+        :page_count(pc), title(t), author(a) { }
 
         Book(unsigned int pc, string t, string a, unsigned int p)
         :page_count(pc), title(t), author(a), price(p){}
