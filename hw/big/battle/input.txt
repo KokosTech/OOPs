@@ -1,0 +1,5 @@
+SpaceExHusband 100 5000 Sad 50 Angery 100 Happy 33
+Aubrey 880 100 499
+Kel 770 100 200
+Hero 500 200 150
+Omori 600 100 300

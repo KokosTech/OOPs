@@ -80,6 +80,7 @@ Store &Store::operator=(const Store &other) {
         Property::operator=(other);
         this->name = other.name;
         this->products.capacity = other.products.capacity;
+        delete[] this->products.products;
         this->products.products = new Product[this->products.capacity];
         for (size_t i = 0; i < this->products.capacity; i++) {
             this->products.products[i] = other.products.products[i];
