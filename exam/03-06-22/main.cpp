@@ -22,9 +22,9 @@ class Machine {
         Machine(string brand, int power, int mass) : brand(brand), power(power), mass(mass) {
             validate();
         }
-
         // copy constructor - we don't have an empty constructor, therefore valitation is not needed
         Machine(const Machine& other) : brand(other.brand), power(other.power), mass(other.mass) { } 
+        
         Machine& operator=(const Machine& other) {
             if(this != &other) {
                 brand = other.brand;
@@ -51,8 +51,8 @@ class Car : public Machine {
             Machine::operator=(other);
             return *this;
         }
-        double calculateTraction() const { return power * mass / 100; }
 
+        double calculateTraction() const { return power * mass / 100; }
 
         friend ostream& operator<<(ostream& out, const Car& c) {
             out << "Brand: " << c.brand << endl;
@@ -75,7 +75,10 @@ class Motorcycle : public Machine{
         Motorcycle(const string& brand, int power, int mass) : Machine(brand, power, mass) { }
         Motorcycle(const Motorcycle& other) : Machine(other) { }
 
-        Motorcycle& operator=(const Motorcycle& other);
+        Motorcycle& operator=(const Motorcycle& other) {
+            Machine::operator=(other);
+            return *this;
+        }
 
         double calculateTraction() const { return power * mass / 100; }
 
@@ -110,6 +113,7 @@ class Track {
 
 int main(){
     try {
+        // Input
         ifstream inputFile("input.txt", ios::in);
         if(!inputFile.is_open()) throw std::runtime_error("Could not open input file");
 
@@ -128,6 +132,8 @@ int main(){
         Motorcycle cycle(name, power, mass);
 
         inputFile.close();
+
+        // Output
 
         ofstream outputFile("output.txt", ios::out);
         if(!outputFile.is_open()) throw std::runtime_error("Could not open output file");
