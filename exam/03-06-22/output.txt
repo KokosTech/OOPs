@@ -1,0 +1,4 @@
+Brand: honda
+Power: 190
+Mass: 1800
+Traction: 3420
