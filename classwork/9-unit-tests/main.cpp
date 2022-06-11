@@ -198,6 +198,7 @@ class Playlist {
                 delete [] this->name;
                 delete [] this->owner;
 
+
                 this->name = strdup(other.name);
                 this->owner = strdup(other.owner);
 
@@ -320,7 +321,7 @@ class Playlist {
 
 size_t Playlist::playlistCount = 0;
 
-int main(int argc, char* argv[]){
+/* int main(int argc, char* argv[]){
     Song s1("song1", "artist1", 20);
     Song s2("song2", "artist2", 30);
 
@@ -344,4 +345,4 @@ int main(int argc, char* argv[]){
     cout << "Playlist count: " << Playlist::getPlaylistCount() << endl;
 
     return 0;
-}
+} */
